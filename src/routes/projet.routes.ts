@@ -4,12 +4,12 @@ import Controller from '../controllers/projet.controller'
 const router = Router();
 
 
-router.post('/creerTache', Controller.creerProjet);
+router.post('/creerProjet', Controller.creerProjet);
 
-router.get('/lireTache/:id?', Controller.lireProjet);
+router.get('/lireProjet/:id?', Controller.lireProjet);
 
-router.patch('/modifierTache/:id', Controller.mettreAJourProjet);
+router.patch('/modifierProjet/:id', Controller.mettreAJourProjet);
 
-router.delete('/supprimerTache/:id', Controller.supprimerProjet);
+router.delete('/supprimerProjet/:id', Controller.supprimerProjet);
 
 export default router;

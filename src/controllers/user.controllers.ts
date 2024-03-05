@@ -110,24 +110,60 @@ const getAllUsers = (req: Request, res: Response, next: NextFunction) => {
 
 
    const deleteUser = async (req: Request, res: Response) => {
-    const id = Number(req.params.id);
     try {
-    await User.findByIdAndDelete(id);
-    res.status(204).send();
-    } catch (error) {
-     res.status(404).send({ error: error.message });
-    }
+        const { id } = req.params;
+    
+        const personnel = await User.findById(id);
+        if (!personnel) {
+          return res.status(404).json({ error: 'Personnel non trouvé.' });
+        }
+    
+        // Suppression du personnel de la base de données
+        await User.findByIdAndDelete(id);
+    
+        res.status(200).json({ message: 'Personnel supprimé avec succès' });
+     } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Une erreur est survenue lors de la suppression du personnel.' });
+     }
    };
 
    const updateUser = async (req: Request, res: Response) => {
-    const id = req.params.id;
-    const updatedUser = req.body;
-    try {
-    await User.findByIdAndUpdate(id, updatedUser, { new: true });
-    res.status(200).send({ message: "Utilisateur mis à jour avec succès" });
-    } catch (error) {
-    res.status(404).send({ error: error.message });
-    }
-   };
+      try {
+        const { id } = req.params;
+        const { nom, prenom, sexe, email, telephone, statut, poste, role, roleIdrole, matricule, password } = req.body;
+    
+        // Vérification des champs requis
+        if (!nom || !prenom || !sexe || !email || !telephone || !poste || !role || !matricule || !password) {
+          return res.status(400).json({ error: 'Tous les champs sont requis.' });
+        }
+    
+        const personnel = await User.findById(id);
+        if (!personnel) {
+          return res.status(404).json({ error: 'Personnel non trouvé.' });
+        }
+    
+        // Mise à jour des informations du personnel
+        personnel.nom = nom;
+        personnel.prenom = prenom;
+        personnel.sexe = sexe;
+        personnel.email = email;
+        personnel.telephone = telephone;
+        personnel.statut = statut;
+        personnel.poste = poste;
+        personnel.role = role;
+        personnel.roleIdrole = roleIdrole;
+        personnel.matricule = matricule;
+        personnel.password = password;
+    
+        await personnel.save();
+    
+        res.status(200).json({ message: 'Personnel mis à jour avec succès', personnel });
+     } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Une erreur est survenue lors de la mise à jour du personnel.' });
+     }
+    };
+   
 
 export default { validateToken, register, login, getAllUsers,deleteUser, updateUser };

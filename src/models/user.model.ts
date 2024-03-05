@@ -1,4 +1,5 @@
 
+import { string } from 'joi';
 import { Document, Schema, model } from 'mongoose';
 
 export interface IUser extends Document {
@@ -8,7 +9,7 @@ export interface IUser extends Document {
   prenom: string;
   sexe: string;
   email: string;
-  telephone: number;
+  telephone: number| string;
   statut: string;
   poste: string;
   role: string;
@@ -27,7 +28,7 @@ const UserSchema: Schema = new Schema(
   personnelcol: { type: String },
   prenom: { type: String },
   sexe: { type: String },
-  telephone: { type: Number },
+  telephone: { type: Number||string },
   statut: { type: String },
   poste: { type: String },
   role: { type: String },

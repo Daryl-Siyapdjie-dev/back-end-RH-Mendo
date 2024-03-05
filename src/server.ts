@@ -7,6 +7,8 @@ import http from 'http';
 import bodyParser from 'body-parser';
 import userRoutes from './routes/user.routes';
 import tacheRoutes from './routes/tache.routes';
+import projetRoutes from './routes/projet.routes';
+
 import * as tacheController from './controllers/tache.controllers';
 
 const NAMESPACE = 'Server';
@@ -84,6 +86,8 @@ router.use((req, res, next) => {
 router.use('/users', userRoutes);
 
 router.use('/taches', tacheRoutes);
+
+router.use('/projets', projetRoutes)
 
 /** Gestion des erreurs */
 router.use((req, res, next) => {

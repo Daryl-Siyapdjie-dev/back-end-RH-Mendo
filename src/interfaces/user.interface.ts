@@ -4,7 +4,7 @@ export interface IUser extends Document {
   matricule: string;
   password: string;
   email: string;
-  telephone: number;
+  telephone: number|string;
   statut: string;
   poste: string;
   role: string;
