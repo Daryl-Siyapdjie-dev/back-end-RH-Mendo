@@ -8,7 +8,7 @@ const NAMESPACE ='Auth';
 
 const signJWT = (user: IUser, callback: (error: Error|null, token: String|null)=>void):void=>{
     let timeSinchEpoch = new Date().getTime();
-    let expirationTime = timeSinchEpoch + Number(config.server.token.expireTime) * 100000
+    let expirationTime = timeSinchEpoch + Number(config.server.token.expireTime) * 10000
     let expirationTimeSeconds = Math.floor(expirationTime / 1000);
 
     

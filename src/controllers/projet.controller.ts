@@ -71,24 +71,25 @@ const supprimerProjet = async (req: Request, res: Response, next: NextFunction) 
 
    const lireProjet = async (req: Request, res: Response, next: NextFunction) => {
     try {
-    const { id } = req.params;
-   
-    if (!id) {
-      return res.status(400).json({ error: 'ID du projet est requis.' });
-    }
-   
-    const projet = await Projet.findById(id);
-   
-    if (!projet) {
-      return res.status(404).json({ error: 'Projet non trouvé.' });
-    }
-   
-    res.status(200).json({ projet });
+        const { id } = req.params;
+
+        if (id) {
+            // Recherchez un projet spécifique par son ID
+            const projet = await Projet.findById(id);
+            if (!projet) {
+                return res.status(404).json({ error: 'Projet non trouvé.' });
+            }
+            res.json(projet);
+        } else {
+            // Recherchez tous les projets
+            const projets = await Projet.find({});
+            res.json(projets);
+        }
     } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Une erreur est survenue lors de la lecture du projet.' });
+        console.error(error);
+        res.status(500).json({ error: 'Une erreur est survenue lors de la lecture du projet.' });
     }
-   };
+};
 
 
 export default {creerProjet, lireProjet, mettreAJourProjet, supprimerProjet  };

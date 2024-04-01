@@ -6,7 +6,7 @@ const router = Router();
 
 router.post('/creerProjet', Controller.creerProjet);
 
-router.get('/lireProjet/:id?', Controller.lireProjet);
+router.get('/lireProjet/', Controller.lireProjet);
 
 router.patch('/modifierProjet/:id', Controller.mettreAJourProjet);
 
